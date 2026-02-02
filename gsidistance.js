@@ -1,5 +1,6 @@
 /*
-Total Inverse Solutions for the Geodesic and Great Elliptic,
+Reference: https://vldb.gsi.go.jp/sokuchi/surveycalc/surveycalc/algorithm/bl2st/bl2st.htm
+originally: Total Inverse Solutions for the Geodesic and Great Elliptic,
 B. R. Bowring, Survey Review, 33, 261 (July 1996), 461–476.
 */
 
@@ -37,15 +38,17 @@ function gsidistance(lat1, lon1, lat2, lon2){
   const c = y * cos(L) + x;
   const epsilon = f * (2 - f) / ((1 - f) * (1 - f));
   
-  let ZONE = 1;
-  let theta0 = Lp;
+  let ZONE = 0;
+  let theta0 = 0.0;
   
   if(c >= 0){
     // Zone 1
+    ZONE = 1;
     theta0 = L * (1 + f * y);
   }else if((0 > c) && (c >= -cos(3 * degree * cos(u1)))){
     // Zone 2
     ZONE = 2;
+    theta0 = Lp;
   }else{
     // Zone 3
     ZONE = 3;
